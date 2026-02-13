@@ -173,22 +173,87 @@
         /* Dirty Book Now Button Styles */
         .muddy-btn {
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: not-allowed;
+            opacity: 0.8;
         }
         .muddy-btn:hover {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80"><defs><linearGradient id="hoseGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%25" style="stop-color:%23333;stop-opacity:1"/><stop offset="100%25" style="stop-color:%23666;stop-opacity:1"/></linearGradient><linearGradient id="sprayGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%25" style="stop-color:%230099ff;stop-opacity:1"/><stop offset="50%25" style="stop-color:%2300ccff;stop-opacity:0.8"/><stop offset="100%25" style="stop-color:%0066ff;stop-opacity:0.6"/></linearGradient></defs><g><path d="M 12 10 Q 15 15 20 22 Q 25 30 32 40 L 42 28 Q 38 20 32 12 Q 25 8 18 8 Q 14 8 12 10 Z" fill="url(%23hoseGrad)" stroke="%23222" stroke-width="1"/><circle cx="32" cy="40" r="8" fill="url(%23sprayGrad)" stroke="%230066ff" stroke-width="2"/><circle cx="28" cy="35" r="3" fill="%2300aaff" opacity="0.7"/><circle cx="36" cy="38" r="3" fill="%2300aaff" opacity="0.7"/><circle cx="32" cy="48" r="3" fill="%2300aaff" opacity="0.6"/><circle cx="40" cy="45" r="2" fill="%2300aaff" opacity="0.5"/><circle cx="24" cy="48" r="2" fill="%2300aaff" opacity="0.5"/><path d="M 10 5 L 15 15" stroke="%23555" stroke-width="3" stroke-linecap="round"/><path d="M 8 8 L 12 14" stroke="%23888" stroke-width="2" stroke-linecap="round"/></g></svg>') 24 20, auto;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><g transform="scaleY(-1) translate(0, -50)"><ellipse cx="25" cy="10" rx="8" ry="6" fill="%23888"/><rect x="18" y="15" width="14" height="20" rx="3" fill="%2366ccff" stroke="%23333" stroke-width="1.5"/><circle cx="32" cy="28" r="2" fill="%230099ff"/><circle cx="35" cy="24" r="1.5" fill="%230099ff"/><circle cx="38" cy="32" r="1" fill="%230099ff"/></g></svg>') 25 40, auto;
+        }
+        .muddy-btn.clean {
+            cursor: pointer;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .muddy-btn.clean:hover {
+            cursor: pointer;
+        }
+        .muddy-btn:hover {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><g transform="scaleY(-1) translate(0, -50)"><ellipse cx="25" cy="10" rx="8" ry="6" fill="%23888"/><rect x="18" y="15" width="14" height="20" rx="3" fill="%2366ccff" stroke="%23333" stroke-width="1.5"/><circle cx="32" cy="28" r="2" fill="%230099ff"/><circle cx="35" cy="24" r="1.5" fill="%230099ff"/><circle cx="38" cy="32" r="1" fill="%230099ff"/></g></svg>') 25 40, auto;
         }
         .muddy-btn-canvas {
             position: absolute;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
             border-radius: inherit;
-            z-index: 2;
-            transition: opacity 0.3s ease-out;
+            z-index: 10;
+            pointer-events: none;
         }
         .muddy-btn-content {
             position: relative;
-            z-index: 1;
+            z-index: 11;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        /* Instruction messages */
+        .muddy-btn-instructions {
+            position: absolute;
+            bottom: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            background: rgba(13, 185, 242, 0.95);
+            color: white;
+            border-radius: 20px;
+            z-index: 20;
+            pointer-events: none;
+            opacity: 1;
+            animation: blink 1.2s ease-in-out infinite;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(13, 185, 242, 0.4);
+            transition: opacity 0.3s ease-out;
+        }
+        .muddy-btn-instructions.hidden {
+            opacity: 0;
+            display: none;
+        }
+        @keyframes blink {
+            0%, 49%, 100% {
+                opacity: 1;
+            }
+            50%, 99% {
+                opacity: 0.4;
+            }
+        }
+        @media (max-width: 640px) {
+            .muddy-btn-desktop {
+                display: none;
+            }
+        }
+        @media (min-width: 641px) {
+            .muddy-btn-mobile {
+                display: none;
+            }
         }
         .muddy-btn span {
             position: relative;
@@ -207,11 +272,32 @@
             box-shadow: 0 2px 8px rgba(0, 100, 200, 0.4);
             pointer-events: none;
         }
+        /* Spray animation effects */
         @keyframes slideUp {
             to {
                 transform: translate(var(--tx, 0px), var(--ty, -40px));
                 opacity: 0;
             }
+        }
+        @keyframes sprayBurst {
+            0% {
+                transform: scale(0) translate(-50%, -50%);
+                opacity: 0.9;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.5) translate(0, 0);
+                opacity: 0;
+            }
+        }
+        .spray-burst {
+            position: absolute;
+            border: 2px solid rgba(100, 200, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sprayBurst 0.6s ease-out forwards;
         }
     </style>
 </head>
@@ -253,226 +339,338 @@
             
             // Interactive Muddy Button with Canvas
             const muddyBtn = document.querySelector('.muddy-btn');
-            const canvas = muddyBtn.querySelector('.muddy-btn-canvas');
-            const ctx = canvas.getContext('2d');
-            let isHovering = false;
-            let cleanedPercentage = 0;
-            let isFullyClean = false;
-            let waterStreams = [];
+            const canvas = muddyBtn ? muddyBtn.querySelector('.muddy-btn-canvas') : null;
             
-            // Set canvas size
-            function resizeCanvas() {
-                const rect = muddyBtn.getBoundingClientRect();
-                canvas.width = rect.width;
-                canvas.height = rect.height;
-                if (!isFullyClean) {
-                    drawMud();
-                }
-            }
-            
-            // Draw initial mud texture
-            function drawMud() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (!muddyBtn || !canvas) {
+                console.error('Muddy button or canvas not found');
+            } else {
+                const ctx = canvas.getContext('2d');
+                let isHovering = false;
+                let cleanedPercentage = 0;
+                let isFullyClean = false;
+                let waterStreams = [];
                 
-                // Heavy mud base
-                const mudGradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                mudGradient.addColorStop(0, '#6B4423');
-                mudGradient.addColorStop(0.5, '#5C3317');
-                mudGradient.addColorStop(1, '#4A2511');
-                ctx.fillStyle = mudGradient;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                // Add dirt spots and splatters
-                ctx.fillStyle = '#3D1F0F';
-                for (let i = 0; i < 40; i++) {
-                    const x = Math.random() * canvas.width;
-                    const y = Math.random() * canvas.height;
-                    const r = Math.random() * 10 + 3;
-                    ctx.beginPath();
-                    ctx.arc(x, y, r, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                
-                // Add heavy texture
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-                for (let i = 0; i < 80; i++) {
-                    const x = Math.random() * canvas.width;
-                    const y = Math.random() * canvas.height;
-                    const w = Math.random() * 20 + 5;
-                    const h = Math.random() * 4 + 1;
-                    ctx.fillRect(x, y, w, h);
-                }
-                
-                // Add rough edges
-                ctx.strokeStyle = '#2A1507';
-                ctx.lineWidth = 3;
-                ctx.strokeRect(0, 0, canvas.width, canvas.height);
-                
-                // Add cracks and dry mud patterns
-                ctx.strokeStyle = 'rgba(0, 0, 0, 0.4)';
-                ctx.lineWidth = 1;
-                for (let i = 0; i < 20; i++) {
-                    ctx.beginPath();
-                    ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
-                    ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
-                    ctx.stroke();
-                }
-            }
-            
-            // Draw water spray effect
-            function sprayWater(x, y) {
-                const radius = 40;
-                
-                // Water circle with gradient
-                const waterGradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-                waterGradient.addColorStop(0, 'rgba(150, 220, 255, 0.9)');
-                waterGradient.addColorStop(0.4, 'rgba(100, 200, 255, 0.6)');
-                waterGradient.addColorStop(1, 'rgba(0, 120, 255, 0)');
-                
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.fillStyle = waterGradient;
-                ctx.beginPath();
-                ctx.arc(x, y, radius, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.globalCompositeOperation = 'source-over';
-                
-                // Create water stream effect
-                createWaterDroplets(x, y);
-            }
-            
-            // Create visible water droplets
-            function createWaterDroplets(x, y) {
-                const dropletCount = 3;
-                for (let i = 0; i < dropletCount; i++) {
-                    const angle = (Math.PI * 2 * i) / dropletCount + (Math.random() - 0.5);
-                    const speed = Math.random() * 3 + 2;
-                    const drop = {
-                        x: x,
-                        y: y,
-                        vx: Math.cos(angle) * speed,
-                        vy: Math.sin(angle) * speed,
-                        size: Math.random() * 3 + 2,
-                        opacity: 0.7,
-                        life: 30
-                    };
-                    waterStreams.push(drop);
-                }
-            }
-            
-            // Draw water streams on button
-            function drawWaterStreams() {
-                waterStreams = waterStreams.filter(drop => drop.life > 0);
-                
-                waterStreams.forEach(drop => {
-                    drop.x += drop.vx;
-                    drop.y += drop.vy;
-                    drop.vy += 0.2; // gravity
-                    drop.life -= 1;
-                    drop.opacity = drop.life / 30;
+                // Set canvas size with proper DPI handling
+                function resizeCanvas() {
+                    const rect = muddyBtn.getBoundingClientRect();
+                    canvas.width = Math.ceil(rect.width);
+                    canvas.height = Math.ceil(rect.height);
                     
-                    if (drop.x >= 0 && drop.x <= muddyBtn.offsetWidth && 
-                        drop.y >= 0 && drop.y <= muddyBtn.offsetHeight) {
-                        const dropEl = document.createElement('div');
-                        dropEl.className = 'water-drop';
-                        dropEl.style.left = drop.x + 'px';
-                        dropEl.style.top = drop.y + 'px';
-                        dropEl.style.width = drop.size + 'px';
-                        dropEl.style.height = drop.size + 'px';
-                        dropEl.style.opacity = drop.opacity;
-                        muddyBtn.appendChild(dropEl);
+                    console.log('Canvas resized to:', canvas.width, 'x', canvas.height);
+                    
+                    if (!isFullyClean) {
+                        drawMud();
+                    }
+                }
+                
+                // Draw initial mud texture
+                function drawMud() {
+                    console.log('Drawing mud...');
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Heavy mud base
+                    const mudGradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    mudGradient.addColorStop(0, '#8B5A2B');
+                    mudGradient.addColorStop(0.5, '#704214');
+                    mudGradient.addColorStop(1, '#654321');
+                    ctx.fillStyle = mudGradient;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Add dirt spots and splatters
+                    ctx.fillStyle = '#3D1F0F';
+                    for (let i = 0; i < 50; i++) {
+                        const x = Math.random() * canvas.width;
+                        const y = Math.random() * canvas.height;
+                        const r = Math.random() * 10 + 4;
+                        ctx.beginPath();
+                        ctx.arc(x, y, r, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    
+                    // Add heavy texture
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+                    for (let i = 0; i < 100; i++) {
+                        const x = Math.random() * canvas.width;
+                        const y = Math.random() * canvas.height;
+                        const w = Math.random() * 25 + 5;
+                        const h = Math.random() * 5 + 2;
+                        ctx.fillRect(x, y, w, h);
+                    }
+                    
+                    // Add rough edges
+                    ctx.strokeStyle = '#1A0F07';
+                    ctx.lineWidth = 3;
+                    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Add cracks and dry mud patterns
+                    ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+                    ctx.lineWidth = 2;
+                    for (let i = 0; i < 30; i++) {
+                        ctx.beginPath();
+                        ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                        ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                        ctx.stroke();
+                    }
+                    
+                    console.log('Mud drawn successfully');
+                }
+                
+                // Draw water spray effect
+                function sprayWater(x, y) {
+                    const radius = 45;
+                    
+                    // Primary water circle with gradient
+                    const waterGradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+                    waterGradient.addColorStop(0, 'rgba(200, 235, 255, 0.95)');
+                    waterGradient.addColorStop(0.3, 'rgba(150, 220, 255, 0.7)');
+                    waterGradient.addColorStop(0.6, 'rgba(100, 200, 255, 0.3)');
+                    waterGradient.addColorStop(1, 'rgba(0, 120, 255, 0)');
+                    
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.fillStyle = waterGradient;
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Add secondary spray rings
+                    const ringGradient = ctx.createRadialGradient(x, y, radius * 0.5, x, y, radius * 1.2);
+                    ringGradient.addColorStop(0, 'rgba(100, 200, 255, 0.2)');
+                    ringGradient.addColorStop(1, 'rgba(0, 120, 255, 0)');
+                    ctx.fillStyle = ringGradient;
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius * 1.2, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.globalCompositeOperation = 'source-over';
+                    
+                    // Create spray burst visual
+                    createSprayBurst(x, y);
+                    
+                    // Create water stream effect
+                    createWaterDroplets(x, y);
+                }
+                
+                // Create spray burst visual effect
+                function createSprayBurst(x, y) {
+                    const burstSize = Math.random() * 15 + 10;
+                    const burst = document.createElement('div');
+                    burst.className = 'spray-burst';
+                    burst.style.left = x + 'px';
+                    burst.style.top = y + 'px';
+                    burst.style.width = burstSize + 'px';
+                    burst.style.height = burstSize + 'px';
+                    burst.style.marginLeft = -(burstSize / 2) + 'px';
+                    burst.style.marginTop = -(burstSize / 2) + 'px';
+                    muddyBtn.appendChild(burst);
+                    
+                    setTimeout(() => burst.remove(), 600);
+                }
+                
+                // Create visible water droplets
+                function createWaterDroplets(x, y) {
+                    const dropletCount = 5;
+                    for (let i = 0; i < dropletCount; i++) {
+                        const angle = (Math.PI * 2 * i) / dropletCount + (Math.random() - 0.5) * 0.5;
+                        const speed = Math.random() * 4 + 2.5;
+                        const drop = {
+                            x: x,
+                            y: y,
+                            vx: Math.cos(angle) * speed,
+                            vy: Math.sin(angle) * speed,
+                            size: Math.random() * 3 + 2,
+                            opacity: 0.7,
+                            life: 30
+                        };
+                        waterStreams.push(drop);
+                    }
+                }
+                
+                // Draw water streams on button
+                function drawWaterStreams() {
+                    waterStreams = waterStreams.filter(drop => drop.life > 0);
+                    
+                    waterStreams.forEach(drop => {
+                        drop.x += drop.vx;
+                        drop.y += drop.vy;
+                        drop.vy += 0.2; // gravity
+                        drop.life -= 1;
+                        drop.opacity = drop.life / 30;
                         
-                        setTimeout(() => dropEl.remove(), 100);
+                        if (drop.x >= 0 && drop.x <= muddyBtn.offsetWidth && 
+                            drop.y >= 0 && drop.y <= muddyBtn.offsetHeight) {
+                            const dropEl = document.createElement('div');
+                            dropEl.className = 'water-drop';
+                            dropEl.style.left = drop.x + 'px';
+                            dropEl.style.top = drop.y + 'px';
+                            dropEl.style.width = drop.size + 'px';
+                            dropEl.style.height = drop.size + 'px';
+                            dropEl.style.opacity = drop.opacity;
+                            muddyBtn.appendChild(dropEl);
+                            
+                            setTimeout(() => dropEl.remove(), 100);
+                        }
+                    });
+                }
+                
+                // Animation loop
+                let animationId;
+                function animate() {
+                    if (isHovering && !isFullyClean) {
+                        drawWaterStreams();
+                        animationId = requestAnimationFrame(animate);
+                    }
+                }
+                
+                // Handle mouse move on button
+                muddyBtn.addEventListener('mousemove', function(e) {
+                    if (!isHovering || isFullyClean) return;
+                    
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    sprayWater(x, y);
+                    
+                    // Calculate cleaned percentage
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    let cleanPixels = 0;
+                    for (let i = 3; i < imageData.data.length; i += 4) {
+                        if (imageData.data[i] < 128) cleanPixels++;
+                    }
+                    cleanedPercentage = (cleanPixels / (imageData.data.length / 4)) * 100;
+                    
+                    // If mostly clean, fully remove the mud layer and lock clean state
+                    if (cleanedPercentage > 90) {
+                        isFullyClean = true;
+                        canvas.style.opacity = '0';
+                        canvas.style.pointerEvents = 'none';
+                        muddyBtn.style.cursor = 'pointer';
+                        muddyBtn.classList.add('clean');
+                        muddyBtn.style.opacity = '1';
+                        
+                        // Hide instruction messages
+                        const instructions = muddyBtn.querySelectorAll('.muddy-btn-instructions');
+                        instructions.forEach(msg => msg.classList.add('hidden'));
+                        
+                        // Create celebration effect
+                        createCelebrationEffect();
                     }
                 });
-            }
-            
-            // Animation loop
-            let animationId;
-            function animate() {
-                if (isHovering && !isFullyClean) {
-                    drawWaterStreams();
-                    animationId = requestAnimationFrame(animate);
+                
+                // Create celebration effect when fully cleaned
+                function createCelebrationEffect() {
+                    for (let i = 0; i < 10; i++) {
+                        const dropEl = document.createElement('div');
+                        dropEl.className = 'water-drop';
+                        dropEl.style.left = Math.random() * muddyBtn.offsetWidth + 'px';
+                        dropEl.style.top = Math.random() * muddyBtn.offsetHeight + 'px';
+                        dropEl.style.width = (Math.random() * 4 + 2) + 'px';
+                        dropEl.style.height = dropEl.style.width;
+                        dropEl.style.background = 'radial-gradient(circle at 30% 30%, rgba(0, 200, 255, 1), rgba(0, 100, 200, 0.8))';
+                        dropEl.style.boxShadow = '0 0 10px rgba(0, 200, 255, 0.6)';
+                        muddyBtn.appendChild(dropEl);
+                        
+                        const tx = (Math.random() - 0.5) * 50;
+                        const ty = -40 - Math.random() * 30;
+                        dropEl.style.animation = `slideUp 0.8s ease-out forwards`;
+                        dropEl.style.setProperty('--tx', tx + 'px');
+                        dropEl.style.setProperty('--ty', ty + 'px');
+                        
+                        setTimeout(() => dropEl.remove(), 800);
+                    }
                 }
-            }
-            
-            // Handle mouse move on button
-            muddyBtn.addEventListener('mousemove', function(e) {
-                if (!isHovering || isFullyClean) return;
                 
-                const rect = canvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                sprayWater(x, y);
-                
-                // Calculate cleaned percentage
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                let cleanPixels = 0;
-                for (let i = 3; i < imageData.data.length; i += 4) {
-                    if (imageData.data[i] < 128) cleanPixels++;
-                }
-                cleanedPercentage = (cleanPixels / (imageData.data.length / 4)) * 100;
-                
-                // If mostly clean, fully remove the mud layer and lock clean state
-                if (cleanedPercentage > 90) {
-                    isFullyClean = true;
-                    canvas.style.opacity = '0';
-                    canvas.style.pointerEvents = 'none';
-                    muddyBtn.style.cursor = 'pointer';
+                muddyBtn.addEventListener('mouseenter', function(e) {
+                    if (isFullyClean) return; // Don't restart if already fully clean
                     
-                    // Create celebration effect
-                    createCelebrationEffect();
-                }
-            });
-            
-            // Create celebration effect when fully cleaned
-            function createCelebrationEffect() {
-                for (let i = 0; i < 10; i++) {
-                    const dropEl = document.createElement('div');
-                    dropEl.className = 'water-drop';
-                    dropEl.style.left = Math.random() * muddyBtn.offsetWidth + 'px';
-                    dropEl.style.top = Math.random() * muddyBtn.offsetHeight + 'px';
-                    dropEl.style.width = (Math.random() * 4 + 2) + 'px';
-                    dropEl.style.height = dropEl.style.width;
-                    dropEl.style.background = 'radial-gradient(circle at 30% 30%, rgba(0, 200, 255, 1), rgba(0, 100, 200, 0.8))';
-                    dropEl.style.boxShadow = '0 0 10px rgba(0, 200, 255, 0.6)';
-                    muddyBtn.appendChild(dropEl);
-                    
-                    const tx = (Math.random() - 0.5) * 50;
-                    const ty = -40 - Math.random() * 30;
-                    dropEl.style.animation = `slideUp 0.8s ease-out forwards`;
-                    dropEl.style.setProperty('--tx', tx + 'px');
-                    dropEl.style.setProperty('--ty', ty + 'px');
-                    
-                    setTimeout(() => dropEl.remove(), 800);
-                }
-            }
-            
-            muddyBtn.addEventListener('mouseenter', function(e) {
-                if (isFullyClean) return; // Don't restart if already fully clean
+                    isHovering = true;
+                    cleanedPercentage = 0;
+                    canvas.style.opacity = '1';
+                    canvas.style.pointerEvents = 'auto';
+                    resizeCanvas();
+                    animate();
+                });
                 
-                isHovering = true;
-                cleanedPercentage = 0;
-                canvas.style.opacity = '1';
-                canvas.style.pointerEvents = 'auto';
+                muddyBtn.addEventListener('mouseleave', function() {
+                    isHovering = false;
+                    cancelAnimationFrame(animationId);
+                    
+                    // Keep clean state if fully clean, otherwise keep partial cleaning
+                    if (!isFullyClean) {
+                        // Partial cleaning remains visible
+                    }
+                });
+                
+                // Mobile touch/scratch handling
+                let lastTouchX = 0;
+                let lastTouchY = 0;
+                
+                muddyBtn.addEventListener('touchstart', function(e) {
+                    if (isFullyClean) return;
+                    const touch = e.touches[0];
+                    lastTouchX = touch.clientX;
+                    lastTouchY = touch.clientY;
+                });
+                
+                muddyBtn.addEventListener('touchmove', function(e) {
+                    if (isFullyClean) return;
+                    e.preventDefault();
+                    
+                    const touch = e.touches[0];
+                    const rect = canvas.getBoundingClientRect();
+                    
+                    // Calculate scratch position
+                    const x = touch.clientX - rect.left;
+                    const y = touch.clientY - rect.top;
+                    
+                    // Only process if within button bounds
+                    if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+                        // Perform water spray (scratch effect)
+                        sprayWater(x, y);
+                        
+                        // Calculate cleaned percentage
+                        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                        let cleanPixels = 0;
+                        for (let i = 3; i < imageData.data.length; i += 4) {
+                            if (imageData.data[i] < 128) cleanPixels++;
+                        }
+                        cleanedPercentage = (cleanPixels / (imageData.data.length / 4)) * 100;
+                        
+                        // If mostly clean, fully remove the mud layer
+                        if (cleanedPercentage > 90) {
+                            isFullyClean = true;
+                            canvas.style.opacity = '0';
+                            canvas.style.pointerEvents = 'none';
+                            muddyBtn.style.cursor = 'pointer';
+                            muddyBtn.classList.add('clean');
+                            muddyBtn.style.opacity = '1';
+                            
+                            // Hide instruction messages
+                            const instructions = muddyBtn.querySelectorAll('.muddy-btn-instructions');
+                            instructions.forEach(msg => msg.classList.add('hidden'));
+                            
+                            createCelebrationEffect();
+                        }
+                    }
+                });
+                
+                muddyBtn.addEventListener('touchend', function() {
+                    // Touch ended
+                });
+                
+                // Prevent button click when not fully clean
+                muddyBtn.addEventListener('click', function(e) {
+                    if (!isFullyClean) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+                });
+                
+                // Initial setup
                 resizeCanvas();
-                animate();
-            });
-            
-            muddyBtn.addEventListener('mouseleave', function() {
-                isHovering = false;
-                cancelAnimationFrame(animationId);
-                
-                // Keep clean state if fully clean, otherwise keep partial cleaning
-                if (!isFullyClean) {
-                    // Partial cleaning remains visible
-                }
-            });
-            
-            // Initial setup
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-        });
+                window.addEventListener('resize', resizeCanvas);
+            }
         });
     </script>
 <!-- Navbar -->
@@ -525,12 +723,12 @@
                         Ensure your family's health with our 6-stage mechanized cleaning process. We remove sludge, bacteria, and viruses from overhead and underground tanks.
                     </p>
 <div class="flex flex-col sm:flex-row gap-4">
-<a class="bg-primary hover:bg-primary-dark text-white text-center px-8 py-3.5 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-primary/30 flex justify-center items-center gap-2 muddy-btn" href="#contact">
+<a class="bg-primary hover:bg-primary-dark text-white text-center px-8 py-3.5 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-primary/30 muddy-btn" href="#contact">
 <canvas class="muddy-btn-canvas"></canvas>
-<div class="muddy-btn-content flex justify-center items-center gap-2 w-full">
 <span class="material-icons-round">calendar_today</span>
                             Book Now
-                        </div>
+                        <div class="muddy-btn-instructions muddy-btn-desktop">Hover to clean</div>
+                        <div class="muddy-btn-instructions muddy-btn-mobile">Scratch to clean</div>
 </a>
 <a class="bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary text-center px-8 py-3.5 rounded-lg font-semibold text-lg transition-all flex justify-center items-center gap-2 group" href="#process">
 <span class="material-icons-round text-primary group-hover:scale-110 transition-transform">play_circle_outline</span>
